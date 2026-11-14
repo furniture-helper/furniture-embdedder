@@ -55,7 +55,7 @@ jobs:
             ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}/product-embedder:${{ env.IMAGE_TAG }}
             ${{ env.ECR_REGISTRY }}/${{ env.ECR_REPOSITORY }}/product-embedder:latest
           build-args: |
-            EMBEDDING_MODEL_ID=embedding-hpo-1784492364-005-62413155
+            EMBEDDING_MODEL_ID=embedding-hpo-1794650524-005-e0f519c3
           secrets: |
             aws_access_key_id=${{ env.AWS_ACCESS_KEY_ID }}
             aws_secret_access_key=${{ env.AWS_SECRET_ACCESS_KEY }}

@@ -18,7 +18,7 @@ def get_pages_to_embed(postgres: PostgresConnector) -> list[Page]:
             WHERE pil.product_price IS NOT NULL
               AND pil.product_title IS NOT NULL
               AND NOT EXISTS (SELECT 1 \
-                              FROM products_embeddings_finetuned_768_2 pe \
+                              FROM products_embeddings_finetuned_768_3 pe \
                               WHERE pe.url = pil.url)
             ORDER BY pil.last_inferred_at
                 LIMIT %s; \
@@ -31,7 +31,7 @@ def get_pages_to_embed(postgres: PostgresConnector) -> list[Page]:
 
 def upsert_embedding(postgres_connector: PostgresConnector, url: str, embedding: list[float]) -> None:
     query = """
-            INSERT INTO products_embeddings_finetuned_768_2 (url, embedding)
+            INSERT INTO products_embeddings_finetuned_768_3 (url, embedding)
             VALUES (%s, %s) ON CONFLICT (url) DO
             UPDATE
                 SET embedding = EXCLUDED.embedding,
