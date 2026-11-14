@@ -5,7 +5,8 @@ ARG S3_URI="s3://kaneel-sagemaker-testing/embedding-model-artifacts/$EMBEDDING_M
 ARG AWS_REGION
 ARG HF_TOKEN
 
-ENV EMBEDDING_MODEL_ID=$EMBEDDING_MODEL_ID
+ENV EMBEDDING_MODEL_ID=$EMBEDDING_MODEL_ID \
+    AWS_REGION=$AWS_REGION
 
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
@@ -13,7 +14,9 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y --no-install-recommends tar && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends tar ca-certificates && rm -rf /var/lib/apt/lists/* \
+    && python -m pip install --upgrade pip \
+    && pip install awscli
 RUN --mount=type=secret,id=aws_access_key_id \
     --mount=type=secret,id=aws_secret_access_key \
     --mount=type=secret,id=aws_session_token \
